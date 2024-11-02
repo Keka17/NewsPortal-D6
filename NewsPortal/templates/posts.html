@@ -1,0 +1,35 @@
+{% extends 'flatpages/default.html' %}
+
+{% load custom_filters %}
+
+
+{% block title %}
+Posts
+{% endblock title %}
+
+{% block content %}
+   <h1>Количество публикаций: {{ posts|length }}</h1>
+
+   <hr>
+   {% if posts %}
+       <table>
+           <tr style="border-bottom: 2px solid red;">
+               <td>Заголовок</td>
+               <td>Дата публикации</td>
+               <td>Превью</td>
+           </tr>
+
+           {% for post in posts%}
+           <tr style="border-bottom: 2px solid black;">
+               <td><b>{{ post.title|censor:"викинг, Викинги, викингов, лидер, Лидер" }}</b></td>
+               <td>{{ post.publication_date|date:'M d Y' }}</td>
+               <td style="text-align: justify;">{{ post.text|censor:"викинг, Викинги, викингов, лидер, Лидер"|truncatewords:20 }}</td>
+
+           </tr>
+           {% endfor %}
+
+       </table>
+   {% else %}
+       <h2>Публикаций нет!</h2>
+   {% endif %}
+{% endblock content %}
